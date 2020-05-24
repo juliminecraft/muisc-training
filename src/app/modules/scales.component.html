@@ -1,0 +1,77 @@
+<mat-card class="main-card">
+    <mat-card-content>
+        <span>{{currentScale}}</span>
+    </mat-card-content>
+</mat-card>
+<mat-card>
+    <mat-card-content>
+        <h2>Scale playing time (in seconds)</h2>
+        <mat-slider [(ngModel)]="scaleIntervalTime" color="primary" [thumbLabel]="true" [min]="10000"
+            [max]="1800000" [step]="5000" [displayWith]="convertToSeconds.bind(this)">
+        </mat-slider>
+        <span>{{convertToSeconds(scaleIntervalTime)}}s</span>
+        <button id="playpause" class="app-button" mat-raised-button color="accent"
+            (click)="togglePlay()">{{buttonText}}</button>
+    </mat-card-content>
+    <mat-card-content>
+        <h2>Drum Loop BPM</h2>
+        <mat-slider [(ngModel)]="drumsbpm" color="primary" [thumbLabel]="true" [min]="80" [max]="140"
+            [step]="5">
+        </mat-slider>
+        <span>{{drumsbpm}}</span>
+    </mat-card-content>
+    <mat-card-content>
+        <mat-button-toggle-group name="drumStyle" [(ngModel)]="drumStyle">
+            <mat-button-toggle value="simple">SIMPLE</mat-button-toggle>
+            <mat-button-toggle value="poprock">POP ROCK</mat-button-toggle>
+            <mat-button-toggle value="bluesrock">BLUES ROCK</mat-button-toggle>
+            <mat-button-toggle value="dance">DANCE</mat-button-toggle>
+          </mat-button-toggle-group>
+    </mat-card-content>
+    <mat-card-content>        
+        <h3>Full Tone Major Scales</h3>        
+        <mat-checkbox #majorfull (change)="changemajorfull($event)" [checked]="true" color="accent" class="scalegroupcheckbox" 
+          [(indeterminate)]="notallmajorfull">
+          All
+        </mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.C" [checked]="true" (change)="clickmajorfull()">C</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.G" [checked]="true" (change)="clickmajorfull()">G</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.A" [checked]="true" (change)="clickmajorfull()">A</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.D" [checked]="true" (change)="clickmajorfull()">D</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.E" [checked]="true" (change)="clickmajorfull()">E</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.B" [checked]="true" (change)="clickmajorfull()">B</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.F" [checked]="true" (change)="clickmajorfull()">F</mat-checkbox>        
+        <h3>Sharp/Flat Tone Major Scales</h3>
+        <mat-checkbox #majoraccidental (change)="changemajoraccidental($event)" [checked]="true" color="accent" class="scalegroupcheckbox" 
+          [(indeterminate)]="notallmajoraccidental">
+          All
+        </mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Fsharp" [checked]="true" (change)="clickmajoraccidental()">F&#9839;</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Db"     [checked]="true" (change)="clickmajoraccidental()">D&#x266D;</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Ab"     [checked]="true" (change)="clickmajoraccidental()">A&#x266D;</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Eb"     [checked]="true" (change)="clickmajoraccidental()">E&#x266D;</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Bb"     [checked]="true" (change)="clickmajoraccidental()">B&#x266D;</mat-checkbox>
+        <h3>Full Tone Minor Scales</h3>
+        <mat-checkbox #minorfull (change)="changeminorfull($event)" [checked]="true" color="accent" class="scalegroupcheckbox" 
+          [(indeterminate)]="notallminorfull">
+          All
+        </mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Am" (change)="clickminorfull()">Am</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Em" (change)="clickminorfull()">Em</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Bm" (change)="clickminorfull()">Bm</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Fm" (change)="clickminorfull()">Fm</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Cm" (change)="clickminorfull()">Cm</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Gm" (change)="clickminorfull()">Gm</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Dm" (change)="clickminorfull()">Dm</mat-checkbox>
+        <h3>Sharp/Flat Tone Minor Scales</h3>
+        <mat-checkbox #minoraccidental (change)="changeminoraccidental($event)" [checked]="true" color="accent" class="scalegroupcheckbox" 
+          [(indeterminate)]="notallminoraccidental">
+          All
+        </mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Fsharpm" [checked]="true" (change)="clickminoraccidental()">F&#9839;m</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Csharpm" [checked]="true" (change)="clickminoraccidental()">C&#9839;m</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Gsharpm" [checked]="true" (change)="clickminoraccidental()">G&#9839;m</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Dsharpm" [checked]="true" (change)="clickminoraccidental()">D&#9839;m</mat-checkbox>
+        <mat-checkbox color="primary" [(ngModel)]="scales.Bbm"     [checked]="true" (change)="clickminoraccidental()">B&#x266D;m</mat-checkbox>
+    </mat-card-content>
+</mat-card>

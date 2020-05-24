@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "prod": "bass-scale-practice",
+    "default": "bass-scale-practice"
+  }
+}
