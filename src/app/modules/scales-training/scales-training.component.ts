@@ -1,13 +1,19 @@
-import { Component, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatCheckbox } from '@angular/material/checkbox';
 
 @Component({
-  selector: "scales",
-  templateUrl: "./scales.component.html",
-  styleUrls: ["./scales.component.scss"]
+  selector: 'app-scales-training',
+  templateUrl: './scales-training.component.html',
+  styleUrls: ['./scales-training.component.css']
 })
-export class ScalesComponent {
-  isDarkTheme = false;
+export class ScalesTrainingComponent implements OnInit {
+
+  constructor() { }
+
+  ngOnInit(): void {
+      this.fillSelectedScalesArray();
+      this.setRandomScale();
+  }
 
   private drumtrackurl =
     "https://firebasestorage.googleapis.com/v0/b/bass-scale-practice.appspot.com/o/drums%2F[DRUMSTYLE]_[BPM].mp3?alt=media&token=e9b2f34e-1c12-4d8c-a8b6-ac37b93695bd";
@@ -48,7 +54,7 @@ export class ScalesComponent {
   public currentScale: any;
   public allSelectedScales = new Array();
   public timeToScaleChange = 60000;
-  private interval: NodeJS.Timeout;
+  private interval;
   private playing = false;
   public buttonText = "PLAY";
   private audioSrc: string;
@@ -62,15 +68,6 @@ export class ScalesComponent {
   @ViewChild("majoraccidental", { static: false })  majoraccidentalcheckbox: MatCheckbox;
   @ViewChild("minorfull", { static: false }) minorfullcheckbox: MatCheckbox;
   @ViewChild("minoraccidental", { static: false })  minoraccidentalcheckbox: MatCheckbox;
-
-  constructor() {
-    this.init();
-  }
-
-  private init() {
-    this.fillSelectedScalesArray();
-    this.setRandomScale();
-  }
 
   private fillSelectedScalesArray() {
     this.allSelectedScales = new Array();
@@ -108,7 +105,7 @@ export class ScalesComponent {
     if (this.playing === false) {
       this.playing = true;
       this.buttonText = "STOP";
-      this.init();
+      this.ngOnInit();
       this.interval = setInterval(
         this.setRandomScale.bind(this),
         this.scaleIntervalTime

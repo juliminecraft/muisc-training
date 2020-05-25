@@ -11,26 +11,26 @@
 			<mat-toolbar-row>
 				<button mat-button (click)="isDarkTheme = !isDarkTheme" class="app-sidebar-button">TOGGLE THEME</button>
 			</mat-toolbar-row>
-
+			<mat-toolbar-row>
+				<a href="https://www.paypal.me/basspracticeapp" target="_blank">
+					<button mat-raised-button color="link" class="donationbutton">
+						Donate
+						<mat-icon class="dollaricon">
+							attach_money
+						</mat-icon>
+					</button>
+				</a>
+			</mat-toolbar-row>
 		</mat-toolbar>
 	</mat-sidenav>
-
 	<mat-toolbar color="primary">
 		<button mat-button class="app-menu-button" (click)="sidenav.toggle()">
 			<i class="material-icons">menu</i>
 		</button>
-		<a href="https://www.paypal.me/basspracticeapp" target="_blank">
-			<button mat-raised-button color="link" class="donationbutton">
-				Donate
-				<mat-icon class="dollaricon">
-					attach_money
-				</mat-icon>
-			</button>
-		</a>
 		<span class="title">Bass Scale Practice (for Beginner and Badasses)</span>
 	</mat-toolbar>
-
+	
 	<div class="app-content">
-		<scales></scales>
+		<app-scales-training></app-scales-training>
 	</div>
 </mat-sidenav-container>

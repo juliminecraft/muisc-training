@@ -7,17 +7,19 @@ import { FormsModule } from '@angular/forms';
 
 import { AppMaterialModule } from './app.material.module';
 import { AppComponent } from './app.component';
-import { ScalesComponent } from './modules/scales.component';
+import { ScalesTrainingModule } from './modules/scales-training/scales-training.module';
+
 
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     AppMaterialModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ScalesTrainingModule
   ],
-  declarations: [AppComponent, ScalesComponent],
+  declarations: [AppComponent],
   entryComponents: [],
-  bootstrap: [AppComponent, ScalesComponent],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
