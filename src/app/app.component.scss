@@ -4,6 +4,12 @@ mat-sidenav-container.m2app-dark {
 
 .app-content {
   padding: 5px;
+  height: 100%;
+}
+
+app-root,
+mat-sidenav-container{ 
+  min-height: 50vw;
 }
 
 .donationbutton {
@@ -52,4 +58,15 @@ mat-card {
 
 .app-sidebar-button {
   width: inherit;
+}
+
+.navicon {
+  margin-right: 5px;
+}
+
+.close_x {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }

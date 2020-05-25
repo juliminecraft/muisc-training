@@ -7,7 +7,7 @@ import { FormsModule } from '@angular/forms';
 
 import { AppMaterialModule } from './app.material.module';
 import { AppComponent } from './app.component';
-import { ScalesTrainingModule } from './modules/scales-training/scales-training.module';
+import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
@@ -16,7 +16,7 @@ import { ScalesTrainingModule } from './modules/scales-training/scales-training.
     FormsModule,
     AppMaterialModule,
     BrowserAnimationsModule,
-    ScalesTrainingModule
+    AppRoutingModule
   ],
   declarations: [AppComponent],
   entryComponents: [],

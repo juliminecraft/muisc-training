@@ -1,0 +1,20 @@
+a {
+    text-decoration: none;    
+}
+
+.practice-icon {
+    margin-top: 10px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: #ddd;
+    padding: 10px;
+}
+
+mat-card {
+ max-width: 15vw;
+}
+
+mat-card div {
+    padding-left: 70px;
+    margin: 10px auto;
+}

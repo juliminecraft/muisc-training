@@ -3,13 +3,28 @@
 	<mat-sidenav #sidenav mode="over" class="app-sidenav" color="primary">
 		<mat-toolbar>
 			<mat-toolbar-row>
+				<mat-icon class="close_x" (click)="sidenav.close()">close</mat-icon>								
+			</mat-toolbar-row>
+			<mat-toolbar-row>
+				<mat-icon class="navicon">fitness_center</mat-icon>
+				<span>Practice Modules</span>				
+			</mat-toolbar-row>
+			<mat-toolbar-row>
+				<button mat-raised-button routerLink="/scales">SCALES</button>
+			</mat-toolbar-row>
+			<mat-toolbar-row>
+				<button mat-raised-button routerLink="/hearpitch">HEAR PITCH</button>
+			</mat-toolbar-row>
+			<mat-toolbar-row>
+				<button mat-raised-button routerLink="/singpitch">SING PITCH</button>
+			</mat-toolbar-row>
+			<mat-toolbar-row>
+				<mat-icon class="navicon">build</mat-icon>
 				<span>Settings</span>
-				<span class="app-toolbar-filler"></span>
-				<mat-icon class="example-icon">build</mat-icon>
 			</mat-toolbar-row>
 
 			<mat-toolbar-row>
-				<button mat-button (click)="isDarkTheme = !isDarkTheme" class="app-sidebar-button">TOGGLE THEME</button>
+				<button mat-raised-button (click)="isDarkTheme = !isDarkTheme" class="app-sidebar-button">TOGGLE THEME</button>
 			</mat-toolbar-row>
 			<mat-toolbar-row>
 				<a href="https://www.paypal.me/basspracticeapp" target="_blank">
@@ -31,6 +46,6 @@
 	</mat-toolbar>
 	
 	<div class="app-content">
-		<app-scales-training></app-scales-training>
+		<router-outlet></router-outlet>
 	</div>
 </mat-sidenav-container>
