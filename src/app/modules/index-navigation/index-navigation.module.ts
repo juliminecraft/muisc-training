@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { IndexNavigationRoutingModule } from './index-navigation-routing.module';
 import { IndexNavigationComponent } from './index-navigation.component';
-import { AppMaterialModule } from 'app/app.material.module';
+import { AppMaterialModule } from '../../app.material.module';
 
 
 @NgModule({
