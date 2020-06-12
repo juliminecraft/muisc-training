@@ -9,6 +9,7 @@ import { AppMaterialModule } from './app.material.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SelectScaleComponent } from './modules/scales-training/components/select-scale/select-scale.component';
+import { IndexNavigationComponent } from './modules/index-navigation/index-navigation.component';
 
 
 @NgModule({
@@ -17,9 +18,9 @@ import { SelectScaleComponent } from './modules/scales-training/components/selec
     FormsModule,
     AppMaterialModule,
     BrowserAnimationsModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
-  declarations: [AppComponent, SelectScaleComponent],
+  declarations: [AppComponent, SelectScaleComponent, IndexNavigationComponent],
   entryComponents: [],
   bootstrap: [AppComponent],
 })
