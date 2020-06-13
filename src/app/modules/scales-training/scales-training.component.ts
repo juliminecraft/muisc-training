@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AllKeysAndModes } from './models/keys';
 import { CookieService } from 'ngx-cookie-service';
 import { GrooveWorkoutSettings } from './models/settings.model';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-scales-training',
@@ -23,8 +24,8 @@ export class ScalesTrainingComponent implements OnInit {
   private audioSrc: string;
   private audioEl: HTMLAudioElement;
   public settings: GrooveWorkoutSettings;
-  public downloadSettingsHref: any;
-  private file: any;
+  public downloadSettingsHref: SafeUrl;
+  
 
   constructor(private cookieService: CookieService,
     private sanitizer: DomSanitizer) { }
@@ -51,12 +52,31 @@ export class ScalesTrainingComponent implements OnInit {
         this.settings = JSON.parse(settingsCookie);
       }
     }
+    this.setDownloadSettingsHref();
     this.fillSelectedScalesArray();
     this.setRandomScale();
   }
 
   public saveSettings() {
     this.cookieService.set("groovesettings", JSON.stringify(this.settings));
+    this.setDownloadSettingsHref();
+  }
+
+  public uploadSettings($event) {
+    console.log($event.target.files[0]);
+    let fileReader = new FileReader();
+    fileReader.onload = (e) => {
+      this.settings = JSON.parse(fileReader.result.toString());
+    }
+    fileReader.readAsText($event.target.files[0]);
+  }
+  
+  public setDownloadSettingsHref() {
+    let theJSON = JSON.stringify(this.settings);
+    let blob = new Blob([theJSON], { type: 'text/json' });
+    let url= window.URL.createObjectURL(blob);
+    let uri:SafeUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+    this.downloadSettingsHref = uri;    
   }
 
   private addAllScalesToArray() {

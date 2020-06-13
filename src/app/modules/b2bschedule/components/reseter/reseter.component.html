@@ -1,0 +1,16 @@
+<div class="reseter">
+    <a href class="reseter__button reseter__schedule" (click)="resetSchedule()" title="change schedule">
+        Change Schedule
+    </a>
+    <div class="reseter__lessons">
+        <a *ngIf="!processingDeleteAllData" href class="reseter__button reseter__lessons--reset" (click)="deleteAllData()" title="delete all data">
+            Delete all Data
+        </a>
+        <a *ngIf="processingDeleteAllData" href class="reseter__button reseter__lessons--validate" (click)="validateDeleteAllData()" title="validate delete all data">
+            Confirm
+        </a>
+        <a *ngIf="processingDeleteAllData" href class="reseter__button reseter__lessons--cancel" (click)="cancelDeleteAllData()" title="cancel">
+            Cancel
+        </a>
+    </div>
+</div>

@@ -149,11 +149,14 @@
     <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.Bb" [checked]="true">B&#x266D;</mat-checkbox>
   </mat-card-content>
   <mat-card-content>
-    <h2>Save Settings</h2>
+    <h2>Settings</h2>
     <div class="savebuttons">
-      <button mat-raised-button class="savebutton" title="SAVE SETTINGS" (click)="saveSettings()">
+      <button mat-raised-button class="savebutton" title="Save settings" (click)="saveSettings()">
         <mat-icon>save</mat-icon>
       </button>
+      <a [href]="downloadSettingsHref" mat-raised-button target="_blank" title="Download settings file" download="scalesettings.json"><mat-icon>get_app</mat-icon></a>
+      <input type="file" (change)="uploadSettings($event)" #uploader hidden>
+      <button (click)="uploader.click()" mat-raised-button class="savebutton" title="Upload settings file"><mat-icon>publish</mat-icon></button>
     </div>
   </mat-card-content>
 </mat-card>

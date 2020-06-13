@@ -3,18 +3,30 @@ a {
 }
 
 .practice-icon {
-    margin-top: 10px;
-    margin-right: 10px;
+    margin-top: 1vw;
+    margin-right: 1vw;
     border-radius: 50%;
     background: #ddd;
-    padding: 10px;
+    padding: 1vw;
 }
 
 mat-card {
- max-width: 15vw;
+ margin: 2vh auto;
 }
 
 mat-card div {
-    padding-left: 70px;
-    margin: 10px auto;
+    padding-left: 6.4vw;
+    margin: 1vw auto;
 }
+
+@media screen and (min-width: 601px) {
+    mat-card {
+        width: 20vw;
+    }
+  }
+
+@media screen and (max-width: 600px) {
+    mat-card {
+        width: auto;
+    }
+  }

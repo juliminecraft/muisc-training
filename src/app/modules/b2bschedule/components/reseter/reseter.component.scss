@@ -1,0 +1,56 @@
+$light-gray: #f2f5f5;
+$orange: #ff6723;
+$light-orange: lighten($orange, 20);
+$height: 50px;
+
+.reseter {
+    &__button {
+        background-color: $light-gray;
+        transition: all .2s;
+        display: block;
+        height: $height;
+        color: black;
+        font-weight: bold;
+        text-decoration: none;
+        text-align: center;
+        padding: 16px 0 0 0;
+        float: left;
+
+        &:hover {
+            background-color: $light-orange;
+        }
+    }
+
+    &__schedule {        
+        width: calc(50% - 5px);
+        margin-right: 5px;        
+    }
+
+    &__lessons {
+        width: calc(50%);
+        height: $height;
+        background-color: $light-gray;
+        float: left;
+
+        &--reset  {
+            width: calc(100%);
+        }
+
+        &--validate {
+            width: calc(50%);
+            color: white;
+            background-color: rgb(172, 13, 13);
+
+            &:hover {
+                background-color: rgb(255, 0, 0);
+            }
+        }
+
+        &--cancel {
+            width: calc(50%);
+            &:hover {
+                background-color: rgb(133, 255, 150);
+            }
+        }
+    }
+}

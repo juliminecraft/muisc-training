@@ -1,0 +1,38 @@
+<div class="schedule">
+    <div *ngIf="scheduleType === 1">
+        <div *ngFor="let d of days">
+            <div class="schedule__element schedule__day">
+                <div class="schedule__day--title">DAY {{ d.name }}</div>
+                <div class="schedule__day--lessons">
+                    <div *ngFor="let l of d.lessons">
+                        <app-lesson class="schedule__day--lessons--lesson lesson" [lesson]="l"></app-lesson>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="scheduleType === 2">
+        <div *ngFor="let d of weeks">
+            <div class="schedule__element schedule__month">
+                <div class="schedule__month--title">WEEK {{ d.name }}</div>
+                <div class="schedule__month--lessons">
+                    <div *ngFor="let l of d.lessons">
+                        <app-lesson class="schedule__month--lessons--lesson lesson" [lesson]="l"></app-lesson>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="scheduleType === 3">
+        <div *ngFor="let d of weeks" class="schedule__element schedule__six-month">
+            <div>
+                <div class="schedule__six-month--title">WEEK {{ d.name }}</div>
+                <div class="schedule__six-month--lessons">
+                    <div *ngFor="let l of d.lessons">
+                        <app-lesson class="six-month--lesson lesson" [lesson]="l"></app-lesson>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

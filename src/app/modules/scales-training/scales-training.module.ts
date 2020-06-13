@@ -6,8 +6,6 @@ import { FormsModule } from '@angular/forms';
 import { ScalesRoutingModule } from './scales-routing.module';
 import { CookieService } from 'ngx-cookie-service';
 
-
-
 @NgModule({
   declarations: [ScalesTrainingComponent],
   imports: [

@@ -1,0 +1,122 @@
+$light-gray: #f2f5f5;
+$portable-size: 530px;
+
+.schedule {
+    overflow: auto;
+
+    &__element {
+        background-color: $light-gray;
+        margin-bottom: 5px;
+        padding: 5px;
+    }
+
+    &__day {
+        overflow: auto;
+        width: calc(50% - 5px);
+        float: left;
+
+        &:nth-child(odd) {
+            margin-right: 5px;
+        }
+
+        &--title {
+            width: 70px;
+            font-weight: bold;
+            float: left;
+
+            @media screen and (max-width: $portable-size) {
+                width: calc(100%);
+            }
+        }
+
+        &--lessons {
+            margin-left: 70px;
+            width: calc(100% - 70px);
+
+            @media screen and (max-width: $portable-size) {
+                margin-left: 0px;
+                width: calc(100%);
+            }
+
+            &--lesson {
+                width: calc(100% / 3);
+                // outline: 1px solid greenyellow;
+            }
+        }
+    }
+
+    &__month {
+        overflow: auto;
+
+        &--title {
+            width: 70px;
+            font-weight: bold;
+            float: left;
+
+            @media screen and (max-width: $portable-size) {
+                width: calc(100%);
+            }
+        }
+
+        &--lessons {
+            margin-left: 70px;
+            width: calc(100% - 70px);
+
+            @media screen and (max-width: $portable-size) {
+                margin-left: 0px;
+                width: calc(100%);
+            }
+
+            &--lesson {
+                width: calc(100% / 7);
+            }
+        }
+    }
+
+    &__six-month {
+        overflow: auto;
+        float: left;
+
+        &:nth-child(odd) {
+            width: calc(42%);
+            margin-right: 5px;
+
+            .six-month--lesson {
+                width: calc(100% / 3);
+            }
+        }
+
+        &:nth-child(even) {
+            width: calc(57% - 5px);
+
+            .six-month--lesson {
+                width: calc(100% / 4);
+            }
+        }
+
+        &--title {
+            width: 80px;
+            font-weight: bold;
+            float: left;
+
+            @media screen and (max-width: $portable-size) {
+                width: calc(100%);
+            }
+        }
+
+        &--lessons {
+            margin-left: 80px;
+            width: calc(100% - 80px);
+
+            @media screen and (max-width: $portable-size) {
+                margin-left: 0px;
+                width: calc(100%);
+            }
+        }
+    }
+}
+
+.lesson {
+    display: block;
+    float: left;
+}
