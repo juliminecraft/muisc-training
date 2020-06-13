@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { IndexNavigationComponent } from './modules/index-navigation/index-navigation.component';
 
 
 const routes: Routes = [
@@ -11,7 +10,7 @@ const routes: Routes = [
   { path: 'b2bschedule', loadChildren: () => import('./modules/b2bschedule/b2bsched.module').then(m => m.B2BScheduleModule) },
   { path: 'hearpitch', loadChildren: () => import('./modules/pitch-detect/pitch-detect.module').then(m => m.PitchDetectModule) },
   { path: 'index', loadChildren: () => import('./modules/index-navigation/index-navigation.module').then(m => m.IndexNavigationModule) },
-  { path: '', component: IndexNavigationComponent }
+  { path: '', loadChildren: () => import('./modules/index-navigation/index-navigation.module').then(m => m.IndexNavigationModule) }
 ];
 
 @NgModule({
