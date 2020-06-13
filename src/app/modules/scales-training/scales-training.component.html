@@ -6,27 +6,28 @@
 <mat-card>
   <mat-card-content>
     <h2>Scale playing time (in seconds)</h2>
-    <mat-slider [(ngModel)]="scaleIntervalTime" color="primary" [thumbLabel]="true" [min]="10000" [max]="1800000"
+    <mat-slider [(ngModel)]="settings.scaleIntervalTime" color="primary" [thumbLabel]="true" [min]="10000" [max]="1800000"
       [step]="5000" [displayWith]="convertToSeconds.bind(this)">
     </mat-slider>
-    <span>{{convertToSeconds(scaleIntervalTime)}}s</span>
+    <span>{{convertToSeconds(settings.scaleIntervalTime)}}s</span>
     <button id="playpause" class="app-button" mat-raised-button color="accent"
       (click)="togglePlay()">{{buttonText}}</button>
   </mat-card-content>
   <mat-card-content>
     <h2>Drum Loop BPM</h2>
-    <mat-slider [(ngModel)]="drumsbpm" color="primary" [thumbLabel]="true" [min]="50" [max]="200" [step]="5">
+    <mat-slider [(ngModel)]="settings.drumsbpm" color="primary" [thumbLabel]="true" [min]="50" [max]="200" [step]="5">
     </mat-slider>
-    <span>{{drumsbpm}}</span>
+    <span>{{settings.drumsbpm}}</span>
   </mat-card-content>
   <mat-card-content>
     <h2>Drum Loop Silenced Bars</h2>
-    <mat-slider [(ngModel)]="silentBars" color="primary" [thumbLabel]="true" [min]="0" [max]="15" [step]="5" [displayWith]="divideByTen.bind(this)">
+    <mat-slider [(ngModel)]="settings.silentBars" color="primary" [thumbLabel]="true" [min]="0" [max]="30" [step]="5" [displayWith]="divideByTen.bind(this)">
     </mat-slider>
-    <span>{{silentBars/10}}</span>
+    <span>{{settings.silentBars/10}}</span>
   </mat-card-content>
   <mat-card-content>
-    <mat-button-toggle-group name="drumStyle" [(ngModel)]="drumStyle">
+    <h2>Drum Loop Style</h2>
+    <mat-button-toggle-group name="drumStyle" [(ngModel)]="settings.drumStyle">
       <mat-button-toggle value="metronome">METRONOME</mat-button-toggle>
       <mat-button-toggle value="simplebeat">SIMPLE</mat-button-toggle>
       <mat-button-toggle value="poprock">POP ROCK</mat-button-toggle>
@@ -35,103 +36,124 @@
     </mat-button-toggle-group>
   </mat-card-content>
   <mat-card-content>
+    <h2>Display Format</h2>
+    <mat-button-toggle-group name="modeDisplay" [(ngModel)]="settings.modeDisplay">
+      <mat-button-toggle value="both">C aeo (min)</mat-button-toggle>
+      <mat-button-toggle value="modes">C aeo</mat-button-toggle>
+      <mat-button-toggle value="scales">C min</mat-button-toggle>
+    </mat-button-toggle-group>
+  </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-content>
+    <h2>Mode/Scale selection</h2>
+  </mat-card-content>
+  <mat-card-content>
     <h3>Major (Ionian)</h3>
-    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(scales.IonianMajor)">TOGGLE ALL</button>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.G" [checked]="true">G</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.C" [checked]="true">C</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.D" [checked]="true">A</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.A" [checked]="true">D</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.E" [checked]="true">E</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.B" [checked]="true">B</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.F" [checked]="true">F</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.FsGb" [checked]="true">F&#9839; / G&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.Db" [checked]="true">D&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.Ab" [checked]="true">A&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.Eb" [checked]="true">E&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.IonianMajor.Bb" [checked]="true">B&#x266D;</mat-checkbox>
+    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(settings.scales.IonianMajor)">TOGGLE ALL</button>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.G" [checked]="true">G</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.C" [checked]="true">C</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.D" [checked]="true">A</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.A" [checked]="true">D</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.E" [checked]="true">E</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.B" [checked]="true">B</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.F" [checked]="true">F</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.FsGb" [checked]="true">F&#9839; / G&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.Db" [checked]="true">D&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.Ab" [checked]="true">A&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.Eb" [checked]="true">E&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.IonianMajor.Bb" [checked]="true">B&#x266D;</mat-checkbox>
     <h3>Dorian</h3>
-    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(scales.Dorian)">TOGGLE ALL</button>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.A">A</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.E">E</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.B">B</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.Fs">F&#9839;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.Cs">C&#9839;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.Gs">G&#9839;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.DsEb">D&#9839; / E&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.Bb" [checked]="true">B&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.F" [checked]="true">F</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.C" [checked]="true">C</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.G" [checked]="true">G</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Dorian.D" [checked]="true">D</mat-checkbox>
+    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(settings.scales.Dorian)">TOGGLE ALL</button>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.A">A</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.E">E</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.B">B</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.Fs">F&#9839;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.Cs">C&#9839;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.Gs">G&#9839;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.DsEb">D&#9839; / E&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.Bb" [checked]="true">B&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.F" [checked]="true">F</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.C" [checked]="true">C</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.G" [checked]="true">G</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Dorian.D" [checked]="true">D</mat-checkbox>
     <h3>Phrygian</h3>
-    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(scales.Phrygian)">TOGGLE ALL</button>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.A">A</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.E">E</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.B">B</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.Fs">F&#9839;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.Cs">C&#9839;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.Gs">G&#9839;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.DsEb">D&#9839; / E&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.Bb" [checked]="true">B&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.F" [checked]="true">F</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.C" [checked]="true">C</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.G" [checked]="true">G</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Phrygian.D" [checked]="true">D</mat-checkbox>
+    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(settings.scales.Phrygian)">TOGGLE ALL</button>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.A">A</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.E">E</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.B">B</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.Fs">F&#9839;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.Cs">C&#9839;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.Gs">G&#9839;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.DsEb">D&#9839; / E&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.Bb" [checked]="true">B&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.F" [checked]="true">F</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.C" [checked]="true">C</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.G" [checked]="true">G</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Phrygian.D" [checked]="true">D</mat-checkbox>
     <h3>Lydian</h3>
-    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(scales.Lydian)">TOGGLE ALL</button>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.G" [checked]="true">G</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.C" [checked]="true">C</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.D" [checked]="true">A</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.A" [checked]="true">D</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.E" [checked]="true">E</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.B" [checked]="true">B</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.F" [checked]="true">F</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.FsGb" [checked]="true">F&#9839; / G&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.Db" [checked]="true">D&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.Ab" [checked]="true">A&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.Eb" [checked]="true">E&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Lydian.Bb" [checked]="true">B&#x266D;</mat-checkbox>
+    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(settings.scales.Lydian)">TOGGLE ALL</button>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.G" [checked]="true">G</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.C" [checked]="true">C</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.D" [checked]="true">A</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.A" [checked]="true">D</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.E" [checked]="true">E</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.B" [checked]="true">B</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.F" [checked]="true">F</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.FsGb" [checked]="true">F&#9839; / G&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.Db" [checked]="true">D&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.Ab" [checked]="true">A&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.Eb" [checked]="true">E&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Lydian.Bb" [checked]="true">B&#x266D;</mat-checkbox>
     <h3>Mixolydian</h3>
-    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(scales.Mixolydian)">TOGGLE ALL</button>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.G" [checked]="true">G</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.C" [checked]="true">C</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.D" [checked]="true">A</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.A" [checked]="true">D</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.E" [checked]="true">E</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.B" [checked]="true">B</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.F" [checked]="true">F</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.FsGb" [checked]="true">F&#9839; / G&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.Db" [checked]="true">D&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.Ab" [checked]="true">A&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.Eb" [checked]="true">E&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Mixolydian.Bb" [checked]="true">B&#x266D;</mat-checkbox>
+    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(settings.scales.Mixolydian)">TOGGLE ALL</button>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.G" [checked]="true">G</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.C" [checked]="true">C</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.D" [checked]="true">A</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.A" [checked]="true">D</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.E" [checked]="true">E</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.B" [checked]="true">B</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.F" [checked]="true">F</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.FsGb" [checked]="true">F&#9839; / G&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.Db" [checked]="true">D&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.Ab" [checked]="true">A&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.Eb" [checked]="true">E&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Mixolydian.Bb" [checked]="true">B&#x266D;</mat-checkbox>
     <h3>Natural Minor (Aeolian)</h3>
-    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(scales.AeolianMinor)">TOGGLE ALL</button>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.A">A</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.E">E</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.B">B</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.Fs">F&#9839;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.Cs">C&#9839;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.Gs">G&#9839;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.DsEb">F&#9839; / G&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.Bb" [checked]="true">B&#x266D;m</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.F" [checked]="true">F</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.C" [checked]="true">C</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.G" [checked]="true">G</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.AeolianMinor.D" [checked]="true">D</mat-checkbox>
+    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(settings.scales.AeolianMinor)">TOGGLE ALL</button>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.A">A</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.E">E</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.B">B</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.Fs">F&#9839;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.Cs">C&#9839;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.Gs">G&#9839;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.DsEb">F&#9839; / G&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.Bb" [checked]="true">B&#x266D;m</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.F" [checked]="true">F</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.C" [checked]="true">C</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.G" [checked]="true">G</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.AeolianMinor.D" [checked]="true">D</mat-checkbox>
     <h3>Locrian</h3>
-    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(scales.Locrian)">TOGGLE ALL</button>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.G" [checked]="true">G</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.C" [checked]="true">C</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.D" [checked]="true">A</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.A" [checked]="true">D</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.E" [checked]="true">E</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.B" [checked]="true">B</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.F" [checked]="true">F</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.FsGb" [checked]="true">F&#9839; / G&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.Db" [checked]="true">D&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.Ab" [checked]="true">A&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.Eb" [checked]="true">E&#x266D;</mat-checkbox>
-    <mat-checkbox color="primary" [(ngModel)]="scales.Locrian.Bb" [checked]="true">B&#x266D;</mat-checkbox>
+    <button mat-raised-button class="selectAllButton" (click)="toggleAllNotes(settings.scales.Locrian)">TOGGLE ALL</button>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.G" [checked]="true">G</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.C" [checked]="true">C</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.D" [checked]="true">A</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.A" [checked]="true">D</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.E" [checked]="true">E</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.B" [checked]="true">B</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.F" [checked]="true">F</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.FsGb" [checked]="true">F&#9839; / G&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.Db" [checked]="true">D&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.Ab" [checked]="true">A&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.Eb" [checked]="true">E&#x266D;</mat-checkbox>
+    <mat-checkbox color="primary" [(ngModel)]="settings.scales.Locrian.Bb" [checked]="true">B&#x266D;</mat-checkbox>
+  </mat-card-content>
+  <mat-card-content>
+    <h2>Save Settings</h2>
+    <div class="savebuttons">
+      <button mat-raised-button class="savebutton" title="SAVE SETTINGS" (click)="saveSettings()">
+        <mat-icon>save</mat-icon>
+      </button>
+    </div>
   </mat-card-content>
 </mat-card>

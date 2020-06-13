@@ -3,11 +3,11 @@
 	<mat-sidenav #sidenav mode="over" class="app-sidenav" color="primary">
 		<mat-toolbar>
 			<mat-toolbar-row>
-				<mat-icon class="close_x" (click)="sidenav.close()">close</mat-icon>								
+				<mat-icon class="close_x" (click)="sidenav.close()">close</mat-icon>
 			</mat-toolbar-row>
 			<mat-toolbar-row>
 				<mat-icon class="navicon">fitness_center</mat-icon>
-				<span>Practice Modules</span>				
+				<span>Practice Modules</span>
 			</mat-toolbar-row>
 			<mat-toolbar-row>
 				<button mat-raised-button routerLink="/scales">SCALES</button>
@@ -24,12 +24,27 @@
 			</mat-toolbar-row>
 
 			<mat-toolbar-row>
-				<button mat-raised-button (click)="isDarkTheme = !isDarkTheme" class="app-sidebar-button">TOGGLE THEME</button>
+				<button mat-raised-button (click)="isDarkTheme = !isDarkTheme" class="app-sidebar-button">TOGGLE
+					THEME</button>
+			</mat-toolbar-row>
+			<mat-toolbar-row>
+				<span>Donate</span>
 			</mat-toolbar-row>
 			<mat-toolbar-row>
 				<a href="https://www.paypal.me/basspracticeapp" target="_blank">
 					<button mat-raised-button color="link" class="donationbutton">
-						Donate
+						paypal.me
+						<mat-icon class="dollaricon">
+							attach_money
+						</mat-icon>
+					</button>
+				</a>
+			</mat-toolbar-row>
+			<mat-toolbar-row>
+				<a href="https://www.gofundme.com/f/groove-amp-scale-practice-website?utm_source=customer&utm_medium=copy_link&utm_campaign=p_cf+share-flow-1"
+					target="_blank">
+					<button mat-raised-button color="link" class="donationbutton">
+						gofundme
 						<mat-icon class="dollaricon">
 							attach_money
 						</mat-icon>
@@ -42,9 +57,9 @@
 		<button mat-button class="app-menu-button" (click)="sidenav.toggle()">
 			<i class="material-icons">menu</i>
 		</button>
-		<span class="title">Groove and Scale Workout (for Beginner and Badasses)</span>
+		<span class="title">Groove and Scale Workout (for Beginner and Badasses)</span>		
 	</mat-toolbar>
-	
+
 	<div class="app-content">
 		<router-outlet></router-outlet>
 	</div>

@@ -4,6 +4,7 @@ import { ScalesTrainingComponent } from './scales-training.component';
 import { AppMaterialModule } from '../../app.material.module';
 import { FormsModule } from '@angular/forms';
 import { ScalesRoutingModule } from './scales-routing.module';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -15,6 +16,7 @@ import { ScalesRoutingModule } from './scales-routing.module';
     FormsModule,
     ScalesRoutingModule
   ],
+  providers: [CookieService],
   exports: [ScalesTrainingComponent]
 })
 export class ScalesTrainingModule { }

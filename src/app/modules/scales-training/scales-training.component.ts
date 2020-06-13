@@ -1,7 +1,8 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatCheckbox } from '@angular/material/checkbox';
-import { AllKeysAndModes, MajorKeys, MinorKeys } from './models/keys';
-import { ThrowStmt } from '@angular/compiler';
+import { Component, OnInit } from '@angular/core';
+import { AllKeysAndModes } from './models/keys';
+import { CookieService } from 'ngx-cookie-service';
+import { GrooveWorkoutSettings } from './models/settings.model';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-scales-training',
@@ -10,48 +11,82 @@ import { ThrowStmt } from '@angular/compiler';
 })
 export class ScalesTrainingComponent implements OnInit {
 
-  constructor() { }
-
-  ngOnInit(): void {
-    var a = "a";
-    this.fillSelectedScalesArray();
-    this.setRandomScale();
-  }
-
-  private drumtrackurl =
+  private readonly drumtrackurl =
     "https://firebasestorage.googleapis.com/v0/b/bass-scale-practice.appspot.com/o/drumtracks%2F[DRUMSTYLE]_[SILENTBARS]_[BPM].mp3?alt=media&token=e9b2f34e-1c12-4d8c-a8b6-ac37b93695bd";
-  public scaleIntervalTime = 60000;
-  public drumsbpm = 110;
-  public silentBars = 0.0;
-  public drumStyle = "poprock";
-  public slider = {
-    value: 120
-  };
-
-  public scales = new AllKeysAndModes();
 
   public currentScale: any;
   public allSelectedScales = new Array();
-  public timeToScaleChange = 60000;
+
   private interval;
   private playing = false;
   public buttonText = "PLAY";
   private audioSrc: string;
   private audioEl: HTMLAudioElement;
+  public settings: GrooveWorkoutSettings;
+  public downloadSettingsHref: any;
+  private file: any;
+
+  constructor(private cookieService: CookieService,
+    private sanitizer: DomSanitizer) { }
 
   private fillSelectedScalesArray() {
     this.allSelectedScales = new Array();
     this.addAllScalesToArray();
   }
 
+  ngOnInit(): void {
+    if (this.settings == null) {
+      var settingsCookie = this.cookieService.get("groovesettings");
+
+      if (settingsCookie === "") {
+        this.settings = {
+          scaleIntervalTime: 60000,
+          drumsbpm: 110,
+          silentBars: 0,
+          drumStyle: "poprock",
+          modeDisplay: "both",
+          scales: new AllKeysAndModes()
+        }
+      } else {
+        this.settings = JSON.parse(settingsCookie);
+      }
+    }
+    this.fillSelectedScalesArray();
+    this.setRandomScale();
+  }
+
+  public saveSettings() {
+    this.cookieService.set("groovesettings", JSON.stringify(this.settings));
+  }
+
   private addAllScalesToArray() {
-    this.addMajor();
-    this.addDorian();
-    this.addPhrygian();
-    this.addLydian();
-    this.addMixolydian();
-    this.addMinor();
-    this.addLocrian();
+    var suffixDisplayTemplate = this.createSuffixDisplayTemplate(suffixDisplayTemplate);
+    this.addMode(this.settings.scales.IonianMajor, suffixDisplayTemplate
+      .replace("[mode]", "ion")
+      .replace("[scale]", "maj"));
+    this.addMode(this.settings.scales.Dorian, " dor");
+    this.addMode(this.settings.scales.Phrygian, " phy");
+    this.addMode(this.settings.scales.Lydian, " lyd");
+    this.addMode(this.settings.scales.Mixolydian, " mix");
+    this.addMode(this.settings.scales.Dorian, " dor");
+    this.addMode(this.settings.scales.AeolianMinor, suffixDisplayTemplate
+      .replace("[mode]", "aeo")
+      .replace("[scale]", "min"));
+    this.addMode(this.settings.scales.Locrian, " loc");
+  }
+
+  private createSuffixDisplayTemplate(suffixDisplayFormat: any) {
+    switch (this.settings.modeDisplay) {
+      case "both":
+        suffixDisplayFormat = " [mode] ([scale])";
+        break;
+      case "modes":
+        suffixDisplayFormat = " [mode]";
+        break;
+      case "scales":
+        suffixDisplayFormat = " [scale]";
+    }
+    return suffixDisplayFormat;
   }
 
   private replaceAccidentals(note: string) {
@@ -62,91 +97,13 @@ export class ScalesTrainingComponent implements OnInit {
       .replace("b", "♭")
   }
 
-  private addMajor() {
-    for (var prop in this.scales.IonianMajor) {
-      if (Object.prototype.hasOwnProperty.call(this.scales.IonianMajor, prop)) {
-        if (this.scales.IonianMajor[prop] === true) {
+  private addMode(keys: any, suffix: string) {
+    for (var prop in keys) {
+      if (Object.prototype.hasOwnProperty.call(keys, prop)) {
+        if (keys[prop] === true) {
           this.allSelectedScales.push(
             this.replaceAccidentals(prop)
-            + " ion (maj)"
-          );
-        }
-      }
-    }
-  }
-
-  private addDorian() {
-    for (var prop in this.scales.Dorian) {
-      if (Object.prototype.hasOwnProperty.call(this.scales.Dorian, prop)) {
-        if (this.scales.Dorian[prop] === true) {
-          this.allSelectedScales.push(
-            this.replaceAccidentals(prop)
-            + " dor"
-          );
-        }
-      }
-    }
-  }
-
-  private addPhrygian() {
-    for (var prop in this.scales.Phrygian) {
-      if (Object.prototype.hasOwnProperty.call(this.scales.Phrygian, prop)) {
-        if (this.scales.Phrygian[prop] === true) {
-          this.allSelectedScales.push(
-            this.replaceAccidentals(prop)
-            + " phy"
-          );
-        }
-      }
-    }
-  }
-
-  private addLydian() {
-    for (var prop in this.scales.Lydian) {
-      if (Object.prototype.hasOwnProperty.call(this.scales.Lydian, prop)) {
-        if (this.scales.Lydian[prop] === true) {
-          this.allSelectedScales.push(
-            this.replaceAccidentals(prop)
-            + " lyd"
-          );
-        }
-      }
-    }
-  }
-
-  private addMixolydian() {
-    for (var prop in this.scales.Mixolydian) {
-      if (Object.prototype.hasOwnProperty.call(this.scales.Mixolydian, prop)) {
-        if (this.scales.Mixolydian[prop] === true) {
-          this.allSelectedScales.push(
-            this.replaceAccidentals(prop)
-            + " mix"
-          );
-        }
-      }
-    }
-  }
-
-  private addMinor() {
-    for (var prop in this.scales.AeolianMinor) {
-      if (Object.prototype.hasOwnProperty.call(this.scales.AeolianMinor, prop)) {
-        if (this.scales.AeolianMinor[prop] === true) {
-          this.allSelectedScales.push(
-            this.replaceAccidentals(prop)
-            + " aeo (min)"
-          );
-        }
-      }
-    }
-  }
-
-  private addLocrian() {
-    for (var prop in this.scales.Locrian) {
-      if (Object.prototype.hasOwnProperty.call(this.scales.Locrian, prop)) {
-        if (this.scales.Locrian[prop] === true) {
-          this.allSelectedScales.push(
-            this.replaceAccidentals(prop)
-            + " mix"
+            + " " + suffix
           );
         }
       }
@@ -189,19 +146,19 @@ export class ScalesTrainingComponent implements OnInit {
       this.ngOnInit();
       this.interval = setInterval(
         this.setRandomScale.bind(this),
-        this.scaleIntervalTime
+        this.settings.scaleIntervalTime
       );
       var audioSrc;
-      if (this.silentBars == 0) {
+      if (this.settings.silentBars == 0) {
         audioSrc = this.drumtrackurl
-          .replace("[BPM]", this.drumsbpm.toString())
-          .replace("[DRUMSTYLE]", this.drumStyle)
+          .replace("[BPM]", this.settings.drumsbpm.toString())
+          .replace("[DRUMSTYLE]", this.settings.drumStyle)
           .replace("[SILENTBARS]_", "");
       } else {
         audioSrc = this.drumtrackurl
-          .replace("[BPM]", this.drumsbpm.toString())
-          .replace("[DRUMSTYLE]", this.drumStyle)
-          .replace("[SILENTBARS]", this.silentBars.toString() + "barsilence");
+          .replace("[BPM]", this.settings.drumsbpm.toString())
+          .replace("[DRUMSTYLE]", this.settings.drumStyle)
+          .replace("[SILENTBARS]", this.settings.silentBars.toString() + "barsilence");
       }
       this.audioSrc = audioSrc;
       this.audioEl = new Audio(this.audioSrc);

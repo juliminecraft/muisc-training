@@ -8,9 +8,6 @@ import { FormsModule } from '@angular/forms';
 import { AppMaterialModule } from './app.material.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { SelectScaleComponent } from './modules/scales-training/components/select-scale/select-scale.component';
-import { IndexNavigationComponent } from './modules/index-navigation/index-navigation.component';
-
 
 @NgModule({
   imports: [
@@ -20,7 +17,7 @@ import { IndexNavigationComponent } from './modules/index-navigation/index-navig
     BrowserAnimationsModule,
     AppRoutingModule,
   ],
-  declarations: [AppComponent, SelectScaleComponent, IndexNavigationComponent],
+  declarations: [AppComponent],
   entryComponents: [],
   bootstrap: [AppComponent],
 })
