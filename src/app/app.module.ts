@@ -15,7 +15,7 @@ import { BrowserModule } from '@angular/platform-browser';
     AppMaterialModule,
     BrowserModule,
     BrowserAnimationsModule,
-    AppRoutingModule,
+    AppRoutingModule
   ],
   declarations: [AppComponent],
   entryComponents: [],

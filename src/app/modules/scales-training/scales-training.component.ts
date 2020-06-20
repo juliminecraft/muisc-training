@@ -4,7 +4,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { GrooveWorkoutSettings } from './models/settings.model';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
-
 @Component({
   selector: 'app-scales-training',
   templateUrl: './scales-training.component.html',
@@ -17,16 +16,17 @@ export class ScalesTrainingComponent implements OnInit {
 
   public currentScale: any;
   public allSelectedScales = new Array();
-
-  private interval;
+  
   private playing = false;
   public buttonText = "PLAY";
   private audioSrc: string;
   private audioEl: HTMLAudioElement;
   public settings: GrooveWorkoutSettings;
   public downloadSettingsHref: SafeUrl;
+  public displayInterval: number;
+  public preDisplayTimeout: any;
+  private scaleDisplayInterval: any;
   
-
   constructor(private cookieService: CookieService,
     private sanitizer: DomSanitizer) { }
 
@@ -36,23 +36,32 @@ export class ScalesTrainingComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.init();
+  }
+
+  private init() {
     if (this.settings == null) {
       var settingsCookie = this.cookieService.get("groovesettings");
 
       if (settingsCookie === "") {
         this.settings = {
-          scaleIntervalTime: 60000,
+          scaleIntervalBars: 16,
           drumsbpm: 110,
           silentBars: 0,
           drumStyle: "poprock",
           modeDisplay: "both",
           scales: new AllKeysAndModes()
-        }
-      } else {
+        };
+      }
+      else {
         this.settings = JSON.parse(settingsCookie);
       }
     }
     this.setDownloadSettingsHref();
+    this.practiceInit();
+  }
+
+  private practiceInit() {
     this.fillSelectedScalesArray();
     this.setRandomScale();
   }
@@ -70,13 +79,13 @@ export class ScalesTrainingComponent implements OnInit {
     }
     fileReader.readAsText($event.target.files[0]);
   }
-  
+
   public setDownloadSettingsHref() {
     let theJSON = JSON.stringify(this.settings);
     let blob = new Blob([theJSON], { type: 'text/json' });
-    let url= window.URL.createObjectURL(blob);
-    let uri:SafeUrl = this.sanitizer.bypassSecurityTrustUrl(url);
-    this.downloadSettingsHref = uri;    
+    let url = window.URL.createObjectURL(blob);
+    let uri: SafeUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+    this.downloadSettingsHref = uri;
   }
 
   private addAllScalesToArray() {
@@ -145,13 +154,6 @@ export class ScalesTrainingComponent implements OnInit {
     }
   }
 
-  public convertToSeconds(milliseconds: number) {
-    if (milliseconds === NaN) {
-      return;
-    }
-    return milliseconds / 1000;
-  }
-
   public divideByTen(silencedDrumBeats: number) {
     if (silencedDrumBeats === NaN) {
       return
@@ -163,12 +165,8 @@ export class ScalesTrainingComponent implements OnInit {
     if (this.playing === false) {
       this.playing = true;
       this.buttonText = "STOP";
-      this.ngOnInit();
-      this.interval = setInterval(
-        this.setRandomScale.bind(this),
-        this.settings.scaleIntervalTime
-      );
-      var audioSrc;
+      this.practiceInit();
+      var audioSrc: string;
       if (this.settings.silentBars == 0) {
         audioSrc = this.drumtrackurl
           .replace("[BPM]", this.settings.drumsbpm.toString())
@@ -180,16 +178,40 @@ export class ScalesTrainingComponent implements OnInit {
           .replace("[DRUMSTYLE]", this.settings.drumStyle)
           .replace("[SILENTBARS]", this.settings.silentBars.toString() + "barsilence");
       }
-      this.audioSrc = audioSrc;
-      this.audioEl = new Audio(this.audioSrc);
-      this.audioEl.loop = true;
-      this.audioEl.play();
+      this.StartAudio(audioSrc);
+      this.audioEl.addEventListener('durationchange', this.firstBarDisplayTimeout.bind(this));
+      this.audioEl.addEventListener('ended', this.restartBarTimers.bind(this));
     } else {
       this.playing = false;
       this.buttonText = "PLAY";
-      clearInterval(this.interval);
+      clearInterval(this.scaleDisplayInterval);
       this.audioEl.pause();
     }
+  }
+
+  private firstBarDisplayTimeout(component: ScalesTrainingComponent){
+    this.displayInterval = (this.settings.scaleIntervalBars * (((this.audioEl.duration) - 1) / 42)) * 1000;
+    this.preDisplayTimeout = window.setTimeout(this.startDisplayInterval.bind(this), (this.displayInterval/this.settings.scaleIntervalBars));
+  }
+
+  private startDisplayInterval(component: ScalesTrainingComponent) {
+    clearTimeout(this.preDisplayTimeout);
+    this.scaleDisplayInterval = setInterval(
+      this.setRandomScale.bind(this),
+      this.displayInterval
+    );
+  }
+
+  private restartBarTimers(component: ScalesTrainingComponent){
+    clearInterval(this.scaleDisplayInterval);
+    this.firstBarDisplayTimeout(this);
+    this.audioEl.play();    
+  }
+
+  private StartAudio(audioSrc: any) {
+    this.audioSrc = audioSrc;
+    this.audioEl = new Audio(this.audioSrc);
+    this.audioEl.play();
   }
 
   toggleAllNotes(notes: any) {

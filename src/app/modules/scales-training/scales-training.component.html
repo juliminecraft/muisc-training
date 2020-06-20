@@ -5,11 +5,11 @@
 </mat-card>
 <mat-card>
   <mat-card-content>
-    <h2>Scale playing time (in seconds)</h2>
-    <mat-slider [(ngModel)]="settings.scaleIntervalTime" color="primary" [thumbLabel]="true" [min]="10000" [max]="1800000"
-      [step]="5000" [displayWith]="convertToSeconds.bind(this)">
+    <h2>Scale display duration in bars</h2>
+    <mat-slider [(ngModel)]="settings.scaleIntervalBars" color="primary" [thumbLabel]="true" [min]="1" [max]="41"
+      [step]="1">
     </mat-slider>
-    <span>{{convertToSeconds(settings.scaleIntervalTime)}}s</span>
+    <span>{{settings.scaleIntervalBars}} Bars</span>
     <button id="playpause" class="app-button" mat-raised-button color="accent"
       (click)="togglePlay()">{{buttonText}}</button>
   </mat-card-content>
