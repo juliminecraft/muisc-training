@@ -45,7 +45,7 @@ export class ScalesTrainingComponent implements OnInit {
 
       if (settingsCookie === "") {
         this.settings = {
-          scaleIntervalBars: 16,
+          scaleIntervalBars: 8,
           drumsbpm: 110,
           silentBars: 0,
           drumStyle: "poprock",
